@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>iMarket</title>
+</head>
+<body>
+
+    <h2>Hello!</h2>
+
+</body>
+</html>
