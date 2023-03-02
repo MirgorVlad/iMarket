@@ -21,7 +21,7 @@ public class ImageRestController {
     private ResponseEntity<?> getImage(@PathVariable(name = "id") int id){
         Image image = imageRepository.findById(id).orElseThrow();
         return ResponseEntity.ok()
-                .header("fileName", image.getOriginalFileName())
+                .header("fileNa me", image.getOriginalFileName())
                 .contentType(MediaType.valueOf(image.getContentType()))
                 .contentLength(image.getSize())
                 .body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));
