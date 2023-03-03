@@ -13,12 +13,14 @@ import org.springframework.stereotype.Service;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public boolean createUser(User user){
         String email = user.getEmail();
         if(userRepository.findUserByEmail(email) != null) return false;
         user.setEnable(true);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.getRoleSet().add(Role.ROLE_USER);
         userRepository.save(user);
         log.info("Saving new User with email: " + email);

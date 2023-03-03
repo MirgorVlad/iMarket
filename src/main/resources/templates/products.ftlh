@@ -5,7 +5,11 @@
     <title>iMarket</title>
 </head>
 <body>
-
+    <a href="/login">Sign in</a>
+    <form action="/logout" method="post">
+        <input type="hidden" name="_csrf" value="${_csrf.token}">
+        <input type="submit" value="logout">
+    </form>
     <h2>Products:</h2>
     <p>Find: </p>
     <form action="/" method="get">

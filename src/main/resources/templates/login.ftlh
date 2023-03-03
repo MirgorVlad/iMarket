@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>iMarket</h1><hr>
-<h4>Registration</h4>
+<h4>Sign in</h4>
 <form action="/login" method="post">
     Email: <input type="email" name="username"><br><br>
     Password: <input type="password" name="password"><br><br>
