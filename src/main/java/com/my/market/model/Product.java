@@ -25,8 +25,9 @@ public class Product {
     private int price;
     @Column(name="city")
     private String city;
-    @Column(name="author")
-    private String author;
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user")
+    private User user;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     private List<Image> imageList = new ArrayList<>();

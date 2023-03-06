@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
+
 @Controller
 public class UserController {
 
@@ -20,7 +22,8 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(){
+    public String login(Principal principal){
+        System.out.println(principal);
         return "login";
     }
 
@@ -32,10 +35,5 @@ public class UserController {
         }
         userService.createUser(user);
         return "redirect:/login";
-    }
-
-    @GetMapping("hello")
-    public String securityUrl(){
-        return "hello";
     }
 }

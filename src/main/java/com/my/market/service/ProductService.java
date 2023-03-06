@@ -2,12 +2,15 @@ package com.my.market.service;
 
 import com.my.market.model.Image;
 import com.my.market.model.Product;
+import com.my.market.model.User;
 import com.my.market.repository.ProductRepository;
+import com.my.market.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +20,8 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Product> getAllProducts(){
         return productRepository.findAll();
@@ -26,8 +31,8 @@ public class ProductService {
         return productRepository.findProductByTitle(title);
     }
 
-    public void saveProduct(Product product,  MultipartFile ... files) throws IOException {
-        List<Image> imageList = new ArrayList<>();
+    public void saveProduct(Principal principal, Product product, MultipartFile ... files) throws IOException {
+        product.setUser(getUserByPrincipal(principal));
         for(int i = 0; i < files.length; i++){
             MultipartFile mf = files[i];
             if(!mf.isEmpty()){
@@ -42,6 +47,12 @@ public class ProductService {
         productRepository.save(savedProduct);
     }
 
+    public User getUserByPrincipal(Principal principal) {
+        if(principal == null)
+            return new User();
+        return userRepository.findUserByEmail(principal.getName());
+    }
+
     private Image toImageEntity(MultipartFile mf) throws IOException {
         Image image = new Image();
         image.setName(mf.getName());
@@ -54,7 +65,7 @@ public class ProductService {
     }
 
     public void deleteProduct(int id){
-      productRepository.deleteById(id);
+      productRepository.deleteProductById(id);
     }
 
     public Product getProductById(int id) {

@@ -5,13 +5,21 @@
     <title>iMarket</title>
 </head>
 <body>
-    <a href="/login">Sign in</a>
+<#if user.email??>
+    <h2>${user.email}</h2>
     <form action="/logout" method="post">
         <input type="hidden" name="_csrf" value="${_csrf.token}">
         <input type="submit" value="logout">
     </form>
+
+    <#else>
+        <a href="/login">Sign in</a>
+</#if>
+
+
+
     <h2>Products:</h2>
-    <p>Find: </p>
+    <h3>Find: </h3>
     <form action="/" method="get">
         Title: <input type="text" name="title">
         <input type="submit" value="Find">
@@ -22,6 +30,7 @@
     </#list>
     </ul>
     <hr>
+<#if user.email??>
     <h3>Create new product</h3>
     <form action="/product/create" method="post" enctype="multipart/form-data">
 
@@ -29,11 +38,13 @@
         Description: <input type="text" name="description"><br><br>
         Price: <input type="number" name="price"><br><br>
         City: <input type="text" name="city"><br><br>
-        Author: <input type="text" name="author"><br><br>
         Image1: <input type="file" name="file1"><br><br>
         Image2: <input type="file" name="file2"><br><br>
         Image3: <input type="file" name="file3"><br><br>
+        <input type="hidden" name="_csrf" value="${_csrf.token}">
         <input type="submit" value="Create">
     </form>
+</#if>
+
 </body>
 </html>
