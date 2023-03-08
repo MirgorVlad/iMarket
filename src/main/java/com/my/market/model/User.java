@@ -37,6 +37,11 @@ public class User implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private List<Product> productList = new ArrayList<>();
 
+
+    public boolean isAdmin(){
+        return roleSet.contains(Role.ROLE_ADMIN);
+    }
+
     //security
 
     @Override

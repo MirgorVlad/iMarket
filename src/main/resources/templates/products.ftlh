@@ -16,7 +16,9 @@
         <a href="/login">Sign in</a>
 </#if>
 
-
+<#if user.isAdmin()>
+    <a href="/admin">Admin page</a>
+</#if>
 
     <h2>Products:</h2>
     <h3>Find: </h3>

@@ -8,6 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 @Slf4j
 public class UserService {
@@ -32,5 +38,31 @@ public class UserService {
     }
     public User findUserById(int id){
         return  userRepository.findUserById(id);
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public void banUser(int id) {
+        User user = findUserById(id);
+        if(user!= null) {
+            user.setEnable(!user.isEnable());
+            userRepository.save(user);
+        }
+    }
+
+    public void changeUserRoles(User user, Map<String, String> form) {
+        System.out.println(form);
+        Set<String> roles = Arrays.stream(Role.values())
+                .map(Role::name)
+                .collect(Collectors.toSet());
+        user.getRoleSet().clear();
+        for (String key : form.keySet()) {
+            if (roles.contains(key)) {
+                user.getRoleSet().add(Role.valueOf(key));
+            }
+        }
+        userRepository.save(user);
     }
 }
