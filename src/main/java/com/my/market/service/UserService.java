@@ -21,9 +21,16 @@ public class UserService {
         if(userRepository.findUserByEmail(email) != null) return false;
         user.setEnable(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.getRoleSet().add(Role.ROLE_USER);
+        user.getRoleSet().add(Role.ROLE_ADMIN);
         userRepository.save(user);
         log.info("Saving new User with email: " + email);
         return true;
+    }
+
+    public User findUserByEmail(String email){
+        return  userRepository.findUserByEmail(email);
+    }
+    public User findUserById(int id){
+        return  userRepository.findUserById(id);
     }
 }
